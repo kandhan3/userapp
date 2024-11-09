@@ -1,22 +1,46 @@
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styling } from '../common/Styling'
 import { deviceHeight, deviceWidth } from '../common/Dimens'
 import { colors } from '../common/Colors'
 import { Images } from '../common/Images'
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
 
 const Home = () => {
+    const [location,setLocation]= useState({})
+
+    useEffect(() => {
+        Geolocation.getCurrentPosition(info =>{
+            console.log(info)
+            setLocation(info.coords)
+        })
+      }, []);
+   
     return (
         <View style={styling.container}>
             <MapView
+                style={{ width: deviceWidth(100), height: deviceHeight(65) }}
                 initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.0922,
+                    latitude: location?.latitude,
+                    longitude: location?.longitude,
+                       latitudeDelta: 1,
                     longitudeDelta: 0.0421,
                 }}
+            >
+                  <Marker
+              draggable
+              coordinate={{
+                latitude: 9.884512,
+                longitude: 78.052353,
+              }}
+              onDragEnd={e =>
+                Alert.alert(JSON.stringify(e.nativeEvent.coordinate))
+              }
+              title={'Test Marker'}
+              description={'This is a description of the marker'}
             />
+            </MapView>
             <View style={{ flex: 1, justifyContent: 'flex-end', padding: 20, rowGap: 10 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderWidth: 1, borderRadius: 10, borderColor: colors.border, padding: 10 }}>
                     <View style={{ alignItems: 'center' }}>
