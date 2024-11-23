@@ -6,6 +6,7 @@ import Intro1 from '../Welcomepages/Intro1';
 import Register from '../Welcomepages/Register';
 import Otp from '../Welcomepages/Otp';
 import Home from '../localrides/Home';
+import Searchlocation from '../localrides/Searchlocation';
 const Stack = createStackNavigator();
 
 const Stacknav = () => {
@@ -20,7 +21,7 @@ const Stacknav = () => {
       <Stack.Screen name="register" component={Register} />
       <Stack.Screen name="otp" component={Otp} />
       <Stack.Screen name="home" component={Home} />
-     
+      <Stack.Screen name="searchlocation" component={Searchlocation} />
     </Stack.Navigator>
   );
 };
