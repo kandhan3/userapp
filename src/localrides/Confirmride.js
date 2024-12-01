@@ -15,8 +15,10 @@ import {Images} from '../common/Images';
 import MapView, {Marker, PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
+import Line from '../common/Line';
+import Button from '../common/Button';
 
-const Home = ({navigation, route}) => {
+const Confirmride = ({navigation, route}) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [currentAddress, setCurrentAddress] = useState('');
   const [destinationLocation, setDestinationLocation] = useState(null);
@@ -322,7 +324,7 @@ const Home = ({navigation, route}) => {
       <MapView
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
-        style={{width: deviceWidth(100), height: deviceHeight(65)}}
+        style={{width: deviceWidth(100), height: deviceHeight(55)}}
         region={region}
         showsUserLocation={true}
         followUserLocation={true}
@@ -341,29 +343,6 @@ const Home = ({navigation, route}) => {
             onDragEnd={onMarkerDragEnd}
           />
         )}
-        {/* {arrowLocation && (
-                    // <Marker
-                    //     coordinate={arrowLocation}
-                    //     title="You"
-                    //     description="Moving position"
-                    //     flat
-                    //     anchor={{ x: 0.5, y: 0.5 }}
-                    // >
-                    //     <Image
-                    //         source={require('../../assets/images/googlemap.jpg')} 
-                    //         style={{ width: 40, height: 40, transform: [{ rotate: '0deg' }] }} 
-                    //     />
-                    // </Marker>
-                    <Marker coordinate={arrowLocation} flat anchor={{ x: 0.5, y: 0.5 }}>
-                        <Image
-                            source={require('../../assets/images/googlemap.jpg')}
-                            style={{
-                                width: 40, height: 40,
-                                transform: [{ rotate: `${arrowRotation}deg` }]
-                            }}
-                        />
-                    </Marker>
-                )} */}
         {destinationLocation && (
           <Marker
             coordinate={destinationLocation}
@@ -382,36 +361,13 @@ const Home = ({navigation, route}) => {
         )}
       </MapView>
       {/* <TouchableOpacity
-                style={{ position: 'absolute', top: deviceHeight(55), right: deviceWidth(10) }}
-                onPress={handleYourLocationPress}
-            >
-                <Image source={require('../../assets/images/Pointer.png')} />
-            </TouchableOpacity> */}
+                  style={{ position: 'absolute', top: deviceHeight(55), right: deviceWidth(10) }}
+                  onPress={handleYourLocationPress}
+              >
+                  <Image source={require('../../assets/images/Pointer.png')} />
+              </TouchableOpacity> */}
       <View
         style={{flex: 1, justifyContent: 'flex-end', padding: 20, rowGap: 10}}>
-        <View style={styles.rideOptions}>
-          <View style={styles.rideOption}>
-            <Image
-              style={styles.image}
-              source={require('../../assets/images/Car.png')}
-            />
-            <Text style={styling.textsub1}>Local Rides</Text>
-          </View>
-          <View style={styles.rideOption}>
-            <Image
-              style={styles.image}
-              source={require('../../assets/images/Car1.png')}
-            />
-            <Text style={styling.textsub1}>Rental</Text>
-          </View>
-          <View style={styles.rideOption}>
-            <Image
-              style={styles.image}
-              source={require('../../assets/images/Car2.png')}
-            />
-            <Text style={styling.textsub1}>Outstation</Text>
-          </View>
-        </View>
         <TouchableOpacity
           onPress={handleSelectDestinationPress}
           style={[styling.field1, styles.destinationInput]}>
@@ -440,12 +396,48 @@ const Home = ({navigation, route}) => {
             }}
           />
         </TouchableOpacity>
-
-        {/* {distance && (
-                    <View style={{ alignItems: 'center', marginTop: 10 }}>
-                        <Text style={styling.textsub1}>Distance: {distance} km</Text>
-                    </View>
-                )} */}
+        <Line></Line>
+        <Text style={styling.textfield1}>Someone else taking this ride?</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', columnGap: 20}}>
+            <Image
+              style={{width: deviceWidth(4), height: deviceWidth(4)}}
+              source={require('../../assets/images/Myself.png')}></Image>
+            <Text style={styling.textfield1}>Myself</Text>
+          </View>
+          <Image
+            style={{width: deviceWidth(4), height: deviceWidth(4)}}
+            source={require('../../assets/images/Select.png')}></Image>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', columnGap: 20}}>
+            <Image
+              style={{width: deviceWidth(4), height: deviceWidth(4)}}
+              source={require('../../assets/images/Myself.png')}></Image>
+            <Text style={styling.textfield1}>Others</Text>
+            <Text style={styling.textsub1}>Choose another contact</Text>
+          </View>
+          <Image
+            style={{width: deviceWidth(4), height: deviceWidth(4)}}
+            source={require('../../assets/images/Ellipse34.png')}></Image>
+        </View>
+        <TouchableOpacity
+          style={{marginHorizontal: 20}}
+          onPress={() => navigation.navigate('picktime')}>
+          <Button text={'Continue'}></Button>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -475,4 +467,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Confirmride;

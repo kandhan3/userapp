@@ -15,8 +15,11 @@ import {Images} from '../common/Images';
 import MapView, {Marker, PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
+import Line from '../common/Line';
+import Button from '../common/Button';
+import Linedim from '../common/Linedim';
 
-const Home = ({navigation, route}) => {
+const Payment = ({navigation, route}) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [currentAddress, setCurrentAddress] = useState('');
   const [destinationLocation, setDestinationLocation] = useState(null);
@@ -322,7 +325,7 @@ const Home = ({navigation, route}) => {
       <MapView
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
-        style={{width: deviceWidth(100), height: deviceHeight(65)}}
+        style={{width: deviceWidth(100), height: deviceHeight(75)}}
         region={region}
         showsUserLocation={true}
         followUserLocation={true}
@@ -341,29 +344,6 @@ const Home = ({navigation, route}) => {
             onDragEnd={onMarkerDragEnd}
           />
         )}
-        {/* {arrowLocation && (
-                    // <Marker
-                    //     coordinate={arrowLocation}
-                    //     title="You"
-                    //     description="Moving position"
-                    //     flat
-                    //     anchor={{ x: 0.5, y: 0.5 }}
-                    // >
-                    //     <Image
-                    //         source={require('../../assets/images/googlemap.jpg')} 
-                    //         style={{ width: 40, height: 40, transform: [{ rotate: '0deg' }] }} 
-                    //     />
-                    // </Marker>
-                    <Marker coordinate={arrowLocation} flat anchor={{ x: 0.5, y: 0.5 }}>
-                        <Image
-                            source={require('../../assets/images/googlemap.jpg')}
-                            style={{
-                                width: 40, height: 40,
-                                transform: [{ rotate: `${arrowRotation}deg` }]
-                            }}
-                        />
-                    </Marker>
-                )} */}
         {destinationLocation && (
           <Marker
             coordinate={destinationLocation}
@@ -382,70 +362,54 @@ const Home = ({navigation, route}) => {
         )}
       </MapView>
       {/* <TouchableOpacity
-                style={{ position: 'absolute', top: deviceHeight(55), right: deviceWidth(10) }}
-                onPress={handleYourLocationPress}
-            >
-                <Image source={require('../../assets/images/Pointer.png')} />
-            </TouchableOpacity> */}
+                    style={{ position: 'absolute', top: deviceHeight(55), right: deviceWidth(10) }}
+                    onPress={handleYourLocationPress}
+                >
+                    <Image source={require('../../assets/images/Pointer.png')} />
+                </TouchableOpacity> */}
       <View
         style={{flex: 1, justifyContent: 'flex-end', padding: 20, rowGap: 10}}>
-        <View style={styles.rideOptions}>
-          <View style={styles.rideOption}>
+        <Text style={styling.textfield1}>Payment method</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', columnGap: 20}}>
             <Image
-              style={styles.image}
-              source={require('../../assets/images/Car.png')}
-            />
-            <Text style={styling.textsub1}>Local Rides</Text>
+              style={{width: deviceWidth(4), height: deviceWidth(3)}}
+              source={require('../../assets/images/Cash.png')}></Image>
+            <Text style={styling.textfield1}>Cash</Text>
           </View>
-          <View style={styles.rideOption}>
+          <Image
+            style={{width: deviceWidth(4), height: deviceWidth(4)}}
+            source={require('../../assets/images/Select.png')}></Image>
+        </View>
+        <Linedim></Linedim>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', columnGap: 20}}>
             <Image
-              style={styles.image}
-              source={require('../../assets/images/Car1.png')}
-            />
-            <Text style={styling.textsub1}>Rental</Text>
+              style={{width: deviceWidth(4), height: deviceWidth(4)}}
+              source={require('../../assets/images/Card.png')}></Image>
+            <Text style={styling.textfield1}>UPI</Text>
           </View>
-          <View style={styles.rideOption}>
-            <Image
-              style={styles.image}
-              source={require('../../assets/images/Car2.png')}
-            />
-            <Text style={styling.textsub1}>Outstation</Text>
-          </View>
+          <Image
+            style={{width: deviceWidth(4), height: deviceWidth(4)}}
+            source={require('../../assets/images/Ellipse34.png')}></Image>
         </View>
         <TouchableOpacity
-          onPress={handleSelectDestinationPress}
-          style={[styling.field1, styles.destinationInput]}>
-          <Image source={Images.greendot} />
-          <TextInput
-            style={styling.textfield1}
-            placeholder="Enter Pickup Location"
-            placeholderTextColor={'#6B768A'}
-            value={currentAddress}
-            editable={false}
-          />
+          style={{marginHorizontal: 20}}
+          onPress={() => navigation.navigate('review')}>
+          <Button text={'Done'}></Button>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleSelectDestinationPress}
-          style={[styling.field1, styles.destinationInput]}>
-          <Image source={Images.reddot} />
-          <TextInput
-            placeholder="Select Destination"
-            placeholderTextColor={'#6B768A'}
-            style={styling.textfield1}
-            value={destinationAddress}
-            editable={false}
-            onChangeText={text => {
-              setDestination(text);
-              fetchSuggestions(text);
-            }}
-          />
-        </TouchableOpacity>
-
-        {/* {distance && (
-                    <View style={{ alignItems: 'center', marginTop: 10 }}>
-                        <Text style={styling.textsub1}>Distance: {distance} km</Text>
-                    </View>
-                )} */}
       </View>
     </View>
   );
@@ -475,4 +439,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Payment;

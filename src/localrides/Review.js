@@ -15,8 +15,11 @@ import {Images} from '../common/Images';
 import MapView, {Marker, PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
+import Button from '../common/Button';
+import Line from '../common/Line';
+import Buttondim from '../common/Buttondim';
 
-const Home = ({navigation, route}) => {
+const Review = ({navigation, route}) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [currentAddress, setCurrentAddress] = useState('');
   const [destinationLocation, setDestinationLocation] = useState(null);
@@ -322,7 +325,7 @@ const Home = ({navigation, route}) => {
       <MapView
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
-        style={{width: deviceWidth(100), height: deviceHeight(65)}}
+        style={{width: deviceWidth(100), height: deviceHeight(60)}}
         region={region}
         showsUserLocation={true}
         followUserLocation={true}
@@ -341,29 +344,6 @@ const Home = ({navigation, route}) => {
             onDragEnd={onMarkerDragEnd}
           />
         )}
-        {/* {arrowLocation && (
-                    // <Marker
-                    //     coordinate={arrowLocation}
-                    //     title="You"
-                    //     description="Moving position"
-                    //     flat
-                    //     anchor={{ x: 0.5, y: 0.5 }}
-                    // >
-                    //     <Image
-                    //         source={require('../../assets/images/googlemap.jpg')} 
-                    //         style={{ width: 40, height: 40, transform: [{ rotate: '0deg' }] }} 
-                    //     />
-                    // </Marker>
-                    <Marker coordinate={arrowLocation} flat anchor={{ x: 0.5, y: 0.5 }}>
-                        <Image
-                            source={require('../../assets/images/googlemap.jpg')}
-                            style={{
-                                width: 40, height: 40,
-                                transform: [{ rotate: `${arrowRotation}deg` }]
-                            }}
-                        />
-                    </Marker>
-                )} */}
         {destinationLocation && (
           <Marker
             coordinate={destinationLocation}
@@ -381,71 +361,81 @@ const Home = ({navigation, route}) => {
           />
         )}
       </MapView>
-      {/* <TouchableOpacity
-                style={{ position: 'absolute', top: deviceHeight(55), right: deviceWidth(10) }}
-                onPress={handleYourLocationPress}
-            >
-                <Image source={require('../../assets/images/Pointer.png')} />
-            </TouchableOpacity> */}
       <View
         style={{flex: 1, justifyContent: 'flex-end', padding: 20, rowGap: 10}}>
         <View style={styles.rideOptions}>
           <View style={styles.rideOption}>
             <Image
               style={styles.image}
-              source={require('../../assets/images/Car.png')}
+              source={require('../../assets/images/Carz.png')}
             />
-            <Text style={styling.textsub1}>Local Rides</Text>
+            <Text style={styling.textfield1}>Mini</Text>
+            <Text style={styling.textsub1}>₹159 - ₹199</Text>
           </View>
           <View style={styles.rideOption}>
             <Image
               style={styles.image}
-              source={require('../../assets/images/Car1.png')}
+              source={require('../../assets/images/Car1z.png')}
             />
-            <Text style={styling.textsub1}>Rental</Text>
+            <Text style={styling.textfield1}>Ev cars</Text>
+            <Text style={styling.textsub1}>₹159 - ₹199</Text>
           </View>
           <View style={styles.rideOption}>
             <Image
-              style={styles.image}
-              source={require('../../assets/images/Car2.png')}
+              style={styles.image1}
+              source={require('../../assets/images/Car2z.png')}
             />
-            <Text style={styling.textsub1}>Outstation</Text>
+            <Text style={styling.textfield1}>Auto</Text>
+            <Text style={styling.textsub1}>₹159 - ₹199</Text>
           </View>
         </View>
+        <Line></Line>
         <TouchableOpacity
-          onPress={handleSelectDestinationPress}
-          style={[styling.field1, styles.destinationInput]}>
-          <Image source={Images.greendot} />
-          <TextInput
-            style={styling.textfield1}
-            placeholder="Enter Pickup Location"
-            placeholderTextColor={'#6B768A'}
-            value={currentAddress}
-            editable={false}
-          />
+          onPress={() => navigation.navigate('coupon')}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', columnGap: 20}}>
+            <Text style={styling.textfield1}>26 Oct 2024, 08.15 PM</Text>
+          </View>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', columnGap: 10}}>
+            <Image
+              style={{width: deviceWidth(3), height: deviceWidth(4)}}
+              source={require('../../assets/images/Coupon.png')}></Image>
+            <Text style={styling.textfield1}>Promo code</Text>
+            <Image
+              style={{width: deviceWidth(3), height: deviceWidth(4)}}
+              source={Images.arrow}></Image>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleSelectDestinationPress}
-          style={[styling.field1, styles.destinationInput]}>
-          <Image source={Images.reddot} />
-          <TextInput
-            placeholder="Select Destination"
-            placeholderTextColor={'#6B768A'}
-            style={styling.textfield1}
-            value={destinationAddress}
-            editable={false}
-            onChangeText={text => {
-              setDestination(text);
-              fetchSuggestions(text);
-            }}
-          />
-        </TouchableOpacity>
+          onPress={() => navigation.navigate('payment')}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <Image
+            style={{width: deviceWidth(6), height: deviceWidth(4)}}
+            source={require('../../assets/images/Payment.png')}></Image>
+          <View>
+            <Text style={styling.textfield1}>Payment</Text>
+            <Text style={styling.textsub1}>
+              You can pay via cash or UPI for your ride
+            </Text>
+          </View>
 
-        {/* {distance && (
-                    <View style={{ alignItems: 'center', marginTop: 10 }}>
-                        <Text style={styling.textsub1}>Distance: {distance} km</Text>
-                    </View>
-                )} */}
+          <Image
+            style={{width: deviceWidth(3), height: deviceWidth(4)}}
+            source={Images.arrow}></Image>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('home')}>
+          <Buttondim text={'Review Booking'}></Buttondim>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -453,19 +443,22 @@ const Home = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   image: {
-    width: deviceWidth(25),
-    height: deviceHeight(7),
+    width: deviceWidth(20),
+    height: deviceHeight(6),
+  },
+  image1: {
+    width: deviceWidth(16),
+    height: deviceHeight(6),
   },
   rideOptions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: colors.border,
-    padding: 10,
   },
   rideOption: {
     alignItems: 'center',
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 10,
   },
   destinationInput: {
     flexDirection: 'row',
@@ -475,4 +468,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Review;

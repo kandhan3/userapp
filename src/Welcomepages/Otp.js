@@ -1,144 +1,3 @@
-// import {
-//   StyleSheet,
-//   Text,
-//   View,
-//   Image,
-//   TouchableOpacity,
-//   TextInput,
-// } from 'react-native';
-// import React from 'react';
-// import {styling} from '../common/Styling';
-// import {Images} from '../common/Images';
-// import {deviceHeight, deviceWidth} from '../common/Dimens';
-// import Buttondim from '../common/Buttondim';
-// import {Fonts} from '../common/Fonts';
-// import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-// import Button from '../common/Button';
-
-// const Otp = ({navigation, route}) => {
-//   const Phonenumber = route.params.phone;
-//   console.log('🚀 ~ Otp ~ Phonenumber:', Phonenumber);
-//   return (
-//     <View style={[styling.container, {padding: 20}]}>
-//       <TouchableOpacity onPress={() => navigation.navigate('register')}>
-//         <Image source={Images.back}></Image>
-//       </TouchableOpacity>
-//       <KeyboardAwareScrollView
-//         contentContainerStyle={{top: deviceHeight(5), rowGap: 20}}>
-//         <Text style={styling.texthead}>OTP Sent!</Text>
-//         <View>
-//           <Text style={styling.textsub}>
-//             Enter the 4-digit code sent to you
-//           </Text>
-//           <View style={{flexDirection: 'row'}}>
-//             <Text style={styling.textsub}>at </Text>
-//             <Text
-//               style={{
-//                 color: '#6B768A',
-//                 fontSize: deviceHeight(2),
-//                 fontFamily: Fonts.ibmbold,
-//                 lineHeight: 20,
-//               }}>
-//               {Phonenumber}
-//             </Text>
-//           </View>
-//         </View>
-//         <View
-//           style={{
-//             flexDirection: 'row',
-//             alignItems: 'center',
-//             justifyContent: 'space-between',
-//           }}>
-//           <View
-//             style={[
-//               styling.field1,
-//               {
-//                 width: deviceWidth(20),
-//                 height: deviceHeight(8),
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//               },
-//             ]}>
-//             <Text style={{color: 'black'}}>4</Text>
-//           </View>
-//           <View
-//             style={[
-//               styling.field1,
-//               {
-//                 width: deviceWidth(20),
-//                 height: deviceHeight(8),
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//               },
-//             ]}>
-//             <Text style={{color: 'black'}}>4</Text>
-//           </View>
-//           <View
-//             style={[
-//               styling.field1,
-//               {
-//                 width: deviceWidth(20),
-//                 height: deviceHeight(8),
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//               },
-//             ]}>
-//             <Text style={{color: 'black'}}>4</Text>
-//           </View>
-//           <View
-//             style={[
-//               styling.field1,
-//               {
-//                 width: deviceWidth(20),
-//                 height: deviceHeight(8),
-//                 alignItems: 'center',
-//                 justifyContent: 'center',
-//               },
-//             ]}>
-//             <Text style={{color: 'black'}}>4</Text>
-//           </View>
-//         </View>
-//         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-//           <Text
-//             style={{
-//               color: '#6B768A',
-//               fontSize: deviceHeight(2),
-//               fontFamily: Fonts.ibmbold,
-//               lineHeight: 20,
-//             }}>
-//             I don’t receive code{' '}
-//           </Text>
-//           <Text
-//             style={{
-//               color: '#0883FE',
-//               fontFamily: Fonts.ibmsemibold,
-//               fontSize: deviceHeight(2),
-//               textDecorationLine: 'underline',
-//               lineHeight: 20,
-//             }}>
-//             Click here
-//           </Text>
-//         </View>
-//       </KeyboardAwareScrollView>
-//       <View
-//         style={{
-//           position: 'absolute',
-//           bottom: 20,
-//           flex: 1,
-//           width: deviceWidth(90),
-//           left: deviceWidth(5),
-//         }}>
-//         <TouchableOpacity onPress={() => navigation.navigate('name')}>
-//           <Button text={'Verify'}></Button>
-//         </TouchableOpacity>
-//       </View>
-//     </View>
-//   );
-// };
-
-// export default Otp;
-
-// const styles = StyleSheet.create({});
 import {
   StyleSheet,
   Text,
@@ -159,7 +18,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
 
 const Otp = ({navigation, route}) => {
-  const Phonenumber = ''
+  const Phonenumber = '';
   const [otp, setOtp] = useState(['', '', '', '']);
   const [loading, setLoading] = useState(false);
 
@@ -316,7 +175,9 @@ const Otp = ({navigation, route}) => {
           width: deviceWidth(90),
           left: deviceWidth(5),
         }}>
-        <TouchableOpacity onPress={()=>navigation.navigate('home')} disabled={loading}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('home')}
+          disabled={loading}>
           <Button text={loading ? 'Verifying...' : 'Verify'}></Button>
         </TouchableOpacity>
       </View>

@@ -7,6 +7,11 @@ import Register from '../Welcomepages/Register';
 import Otp from '../Welcomepages/Otp';
 import Home from '../localrides/Home';
 import Searchlocation from '../localrides/Searchlocation';
+import Confirmride from '../localrides/Confirmride';
+import Picktime from '../localrides/Picktime';
+import Review from '../localrides/Review';
+import Coupon from '../localrides/Coupon';
+import Payment from '../localrides/Payment';
 const Stack = createStackNavigator();
 
 const Stacknav = () => {
@@ -22,6 +27,11 @@ const Stacknav = () => {
       <Stack.Screen name="otp" component={Otp} />
       <Stack.Screen name="home" component={Home} />
       <Stack.Screen name="searchlocation" component={Searchlocation} />
+      <Stack.Screen name="confirmride" component={Confirmride} />
+      <Stack.Screen name="picktime" component={Picktime} />
+      <Stack.Screen name="review" component={Review} />
+      <Stack.Screen name="coupon" component={Coupon} />
+      <Stack.Screen name="payment" component={Payment} />
     </Stack.Navigator>
   );
 };
