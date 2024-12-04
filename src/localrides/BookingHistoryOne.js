@@ -11,7 +11,7 @@ import Button from '../common/Button';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
-const Home = ({ route }) => {
+const BookingHistoryOne = ({ route }) => {
     const [currentLocation, setCurrentLocation] = useState(null);
     const [currentAddress, setCurrentAddress] = useState('');
     const [destinationLocation, setDestinationLocation] = useState(null);
@@ -381,14 +381,11 @@ const Home = ({ route }) => {
                         <Text style={styling.textsub1}>Distance: {distance} km</Text>
                     </View>
                 )} */}
-
                 </View>
-                <TouchableOpacity onPress={() => { navigation.navigate('ReviewBooking') }} style={{ width: deviceHeight(40), alignSelf: 'center', marginBottom: deviceHeight(1) }} >
-                    <Button text={'Review Booking'} />
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => { navigation.navigate('BookingHistoryOne') }} style={{ width: deviceHeight(40), alignSelf: 'center', marginBottom: deviceHeight(1) }} >
-                    <Button text={'Booking History'} />
+                <TouchableOpacity onPress={() => { navigation.navigate('BookingHistoryTwo') }} style={{ marginTop: deviceHeight(3), width: deviceHeight(40), alignSelf: 'center', marginBottom: deviceHeight(3) }}>
+                    <Button
+                        text={'Confirm Booking'}
+                    />
                 </TouchableOpacity>
             </ScrollView>
         </View>
@@ -420,4 +417,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Home;
+export default BookingHistoryOne;

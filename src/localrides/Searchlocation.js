@@ -18,36 +18,32 @@ import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import Line from '../common/Line';
 import Button from '../common/Button';
+import Favorites from '../common/Favorites';
 
-const Searchlocation = ({ navigation }) => {
-    const [location, setLocation] = useState(null);
-    const [markerLocation, setMarkerLocation] = useState(null);
+const Searchlocation = ({ navigation, route }) => {
     const [address, setAddress] = useState('');
     const [destination, setDestination] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const apiKey = 'AIzaSyDPgJZYAJjeWwIPYKlOjcIgP44_ABNsM7w';
 
+    const picklocatoin = route?.params?.location
+
     useEffect(() => {
         const getLocation = async () => {
-            Geolocation.getCurrentPosition(
-                async (info) => {
-                    const coords = info.coords;
-                    setLocation(coords);
-                    const addressFromCoords = await getAddressFromCoordinates(coords.latitude, coords.longitude);
+            if (picklocatoin) {
+                try {
+                    const addressFromCoords = await getAddressFromCoordinates(picklocatoin.latitude, picklocatoin.longitude);
                     setAddress(addressFromCoords);
-                    console.log(addressFromCoords);
-
-                },
-                (error) => console.log(error),
-                { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-            );
+                } catch (error) {
+                    console.log();
+                }
+            }
         };
         getLocation();
     }, []);
 
     const getAddressFromCoordinates = async (latitude, longitude) => {
-
         const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`;
         try {
             const response = await axios.get(url);
@@ -71,12 +67,8 @@ const Searchlocation = ({ navigation }) => {
         const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=${apiKey}`;
         try {
             const response = await axios.get(url);
-            console.log(response.data);
-
             if (response.data.status === 'OK') {
                 setSuggestions(response.data.predictions);
-                console.log(response.data.predictions);
-
                 setDropdownVisible(true);
             } else {
                 setSuggestions([]);
@@ -96,6 +88,7 @@ const Searchlocation = ({ navigation }) => {
                 const result = response.data.result;
                 setDestination(result.formatted_address);
                 setDropdownVisible(false);
+                navigation.navigate('home',{destlocation:result.geometry.location})
             }
         } catch (error) {
             console.error('Error fetching place details:', error);
@@ -130,8 +123,11 @@ const Searchlocation = ({ navigation }) => {
                             }}
                         />
                     </View>
+
+                    <Line></Line>
                     {isDropdownVisible && (
                         <View style={styles.dropdownContainer}>
+                            <Text style={styling.textfield1}>Suggestions</Text>
                             <FlatList
                                 data={suggestions}
                                 keyExtractor={(item) => item.place_id}
@@ -146,8 +142,13 @@ const Searchlocation = ({ navigation }) => {
                             />
                         </View>
                     )}
-                    <Line></Line>
-                    <View style={{ top: deviceHeight(60),rowGap:10 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', columnGap: 10}}>
+                        <Favorites text={'Add Home'} image1={Images.home} flex={true}></Favorites>
+                        <Favorites text={'Add Work'} image1={Images.work} flex={true}></Favorites>
+                    </View>
+                    <View><Favorites text={'Favourite Places'} image1={Images.work} image2={Images.arrow}></Favorites></View>
+
+                    <View style={{position:'absolute', top: deviceHeight(80),left:deviceWidth(5), rowGap: 10 }}>
                         <Text style={styling.textsub1}>
                             If You are not able to find the location from search
                         </Text>
@@ -155,7 +156,7 @@ const Searchlocation = ({ navigation }) => {
                             <Button text={'Set Location on Map'}></Button>
                         </TouchableOpacity>
                     </View>
-                       
+
                 </View>
             </View>
         </TouchableWithoutFeedback>
@@ -171,10 +172,10 @@ const styles = StyleSheet.create({
     dropdownContainer: {
         backgroundColor: '#fff',
         borderRadius: 5,
-        position: 'absolute',
-        top: deviceHeight(30),
-        left: 20,
-        right: 20,
+        // position: 'absolute',
+        // top: deviceHeight(30),
+        // left: 20,
+        // right: 20,
         maxHeight: deviceHeight(20),
         elevation: 3,
         shadowColor: '#000',
@@ -182,6 +183,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 2,
         zIndex: 10,
+        padding: 5
     },
     suggestionItem: {
         padding: 10,
