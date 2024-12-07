@@ -7,19 +7,19 @@ import {
   TouchableOpacity,
   Modal,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { styling } from '../common/Styling';
-import { deviceHeight, deviceWidth } from '../common/Dimens';
-import { colors } from '../common/Colors';
-import { Images } from '../common/Images';
-import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps';
+import React, {useEffect, useState} from 'react';
+import {styling} from '../common/Styling';
+import {deviceHeight, deviceWidth} from '../common/Dimens';
+import {colors} from '../common/Colors';
+import {Images} from '../common/Images';
+import MapView, {Marker, PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
+import Line from '../common/Line';
 import Button from '../common/Button';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import Linedim from '../common/Linedim';
 
-const Home = ({ route }) => {
+const Payment = ({navigation, route}) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [currentAddress, setCurrentAddress] = useState('');
   const [destinationLocation, setDestinationLocation] = useState(null);
@@ -29,10 +29,8 @@ const Home = ({ route }) => {
   const [arrowLocation, setArrowLocation] = useState(null);
   const [arrowRotation, setArrowRotation] = useState(0);
   const apiKey = 'AIzaSyDPgJZYAJjeWwIPYKlOjcIgP44_ABNsM7w';
-  const navigation = useNavigation()
 
-  const destlocatoin = route?.params?.destlocation
-  console.log(destlocatoin);
+  const destlocatoin = route?.params?.destlocation;
 
   const mapRef = React.useRef(null);
 
@@ -48,7 +46,7 @@ const Home = ({ route }) => {
       try {
         Geolocation.getCurrentPosition(
           async info => {
-            const { latitude, longitude } = info.coords;
+            const {latitude, longitude} = info.coords;
             const coords = {
               latitude,
               longitude,
@@ -68,7 +66,7 @@ const Home = ({ route }) => {
             console.log('Error fetching location:', error);
             getLocation();
           },
-          { enableHighAccuracy: false, timeout: 30000, maximumAge: 5000 },
+          {enableHighAccuracy: false, timeout: 30000, maximumAge: 5000},
         );
         if (destlocatoin) {
           setDestinationLocation({
@@ -93,8 +91,8 @@ const Home = ({ route }) => {
 
     const watchID = Geolocation.watchPosition(
       info => {
-        const { latitude, longitude } = info.coords;
-        const updatedCoords = { latitude, longitude };
+        const {latitude, longitude} = info.coords;
+        const updatedCoords = {latitude, longitude};
         setArrowLocation(updatedCoords);
         if (destinationLocation) {
           const updatedDistance = calculateDistance(
@@ -107,7 +105,7 @@ const Home = ({ route }) => {
         }
       },
       error => console.log('Error watching position:', error),
-      { enableHighAccuracy: true, distanceFilter: 1 },
+      {enableHighAccuracy: true, distanceFilter: 1},
     );
 
     return () => Geolocation.clearWatch(watchID);
@@ -149,8 +147,8 @@ const Home = ({ route }) => {
   };
 
   const handleMapPress = async e => {
-    const { latitude, longitude } = e.nativeEvent.coordinate;
-    const location = { latitude, longitude };
+    const {latitude, longitude} = e.nativeEvent.coordinate;
+    const location = {latitude, longitude};
     setCurrentLocation(location);
     const address = await getAddressFromCoordinates(latitude, longitude);
     setCurrentAddress(address);
@@ -178,7 +176,7 @@ const Home = ({ route }) => {
     //     },
     //     1000
     // );
-    navigation.navigate('searchlocation', { location: currentLocation });
+    navigation.navigate('searchlocation', {location: currentLocation});
   };
 
   useEffect(() => {
@@ -217,10 +215,10 @@ const Home = ({ route }) => {
     const y = Math.sin(dLon) * Math.cos(toRad(destinationLocation.latitude));
     const x =
       Math.cos(toRad(currentLocation.latitude)) *
-      Math.sin(toRad(destinationLocation.latitude)) -
+        Math.sin(toRad(destinationLocation.latitude)) -
       Math.sin(toRad(currentLocation.latitude)) *
-      Math.cos(toRad(destinationLocation.latitude)) *
-      Math.cos(dLon);
+        Math.cos(toRad(destinationLocation.latitude)) *
+        Math.cos(dLon);
     const bearing = toDeg(Math.atan2(y, x));
     return (bearing + 360) % 360;
   };
@@ -301,15 +299,15 @@ const Home = ({ route }) => {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(toRad(lat1)) *
-      Math.cos(toRad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
   };
 
   const onMarkerDragEnd = async e => {
-    const { latitude, longitude } = e.nativeEvent.coordinate;
+    const {latitude, longitude} = e.nativeEvent.coordinate;
     const updatedCoords = {
       latitude,
       longitude,
@@ -324,145 +322,96 @@ const Home = ({ route }) => {
 
   return (
     <View style={styling.container}>
-      <ScrollView>
-        <MapView
-          ref={mapRef}
-          provider={PROVIDER_GOOGLE}
-          style={{ width: deviceWidth(100), height: deviceHeight(65) }}
-          region={region}
-          showsUserLocation={true}
-          followUserLocation={true}
-          onRegionChangeComplete={newRegion => {
-            setRegion(newRegion);
-            handleRegionChangeComplete();
-          }}
-          onPress={handleMapPress}>
-          {currentLocation && (
-            <Marker
-              coordinate={currentLocation}
-              title="Your Location"
-              description={currentAddress || 'Fetching address...'}
-              image={Images.greenpin}
-              draggable
-              onDragEnd={onMarkerDragEnd}
-            />
-          )}
-          {/* {arrowLocation && (
-                    // <Marker
-                    //     coordinate={arrowLocation}
-                    //     title="You"
-                    //     description="Moving position"
-                    //     flat
-                    //     anchor={{ x: 0.5, y: 0.5 }}
-                    // >
-                    //     <Image
-                    //         source={require('../../assets/images/googlemap.jpg')} 
-                    //         style={{ width: 40, height: 40, transform: [{ rotate: '0deg' }] }} 
-                    //     />
-                    // </Marker>
-                    <Marker coordinate={arrowLocation} flat anchor={{ x: 0.5, y: 0.5 }}>
-                        <Image
-                            source={require('../../assets/images/googlemap.jpg')}
-                            style={{
-                                width: 40, height: 40,
-                                transform: [{ rotate: `${arrowRotation}deg` }]
-                            }}
-                        />
-                    </Marker>
-                )} */}
-          {destinationLocation && (
-            <Marker
-              coordinate={destinationLocation}
-              title="Destination"
-              description={destinationAddress || 'Fetching address...'}
-              image={Images.redpin}
-            />
-          )}
+      <MapView
+        ref={mapRef}
+        provider={PROVIDER_GOOGLE}
+        style={{width: deviceWidth(100), height: deviceHeight(75)}}
+        region={region}
+        showsUserLocation={true}
+        followUserLocation={true}
+        onRegionChangeComplete={newRegion => {
+          setRegion(newRegion);
+          handleRegionChangeComplete();
+        }}
+        onPress={handleMapPress}>
+        {currentLocation && (
+          <Marker
+            coordinate={currentLocation}
+            title="Your Location"
+            description={currentAddress || 'Fetching address...'}
+            image={Images.greenpin}
+            draggable
+            onDragEnd={onMarkerDragEnd}
+          />
+        )}
+        {destinationLocation && (
+          <Marker
+            coordinate={destinationLocation}
+            title="Destination"
+            description={destinationAddress || 'Fetching address...'}
+            image={Images.redpin}
+          />
+        )}
 
-          {routeCoordinates.length > 0 && (
-            <Polyline
-              coordinates={routeCoordinates}
-              strokeColor="#0000FF"
-              strokeWidth={4}
-            />
-          )}
-        </MapView>
-        {/* <TouchableOpacity
-                style={{ position: 'absolute', top: deviceHeight(55), right: deviceWidth(10) }}
-                onPress={handleYourLocationPress}
-            >
-                <Image source={require('../../assets/images/Pointer.png')} />
-            </TouchableOpacity> */}
+        {routeCoordinates.length > 0 && (
+          <Polyline
+            coordinates={routeCoordinates}
+            strokeColor="#0000FF"
+            strokeWidth={4}
+          />
+        )}
+      </MapView>
+      {/* <TouchableOpacity
+                    style={{ position: 'absolute', top: deviceHeight(55), right: deviceWidth(10) }}
+                    onPress={handleYourLocationPress}
+                >
+                    <Image source={require('../../assets/images/Pointer.png')} />
+                </TouchableOpacity> */}
+      <View
+        style={{flex: 1, justifyContent: 'flex-end', padding: 20, rowGap: 10}}>
+        <Text style={styling.textfield1}>Payment method</Text>
         <View
-          style={{ flex: 1, justifyContent: 'flex-end', padding: 20, rowGap: 10 }}>
-          <View style={styles.rideOptions}>
-            <View style={styles.rideOption}>
-              <Image
-                style={styles.image}
-                source={require('../../assets/images/Car.png')}
-              />
-              <Text style={styling.textsub1}>Local Rides</Text>
-            </View>
-            <View style={styles.rideOption}>
-              <Image
-                style={styles.image}
-                source={require('../../assets/images/Car1.png')}
-              />
-              <Text style={styling.textsub1}>Rental</Text>
-            </View>
-            <View style={styles.rideOption}>
-              <Image
-                style={styles.image}
-                source={require('../../assets/images/Car2.png')}
-              />
-              <Text style={styling.textsub1}>Outstation</Text>
-            </View>
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', columnGap: 20}}>
+            <Image
+              style={{width: deviceWidth(4), height: deviceWidth(3)}}
+              source={require('../../assets/images/Cash.png')}></Image>
+            <Text style={styling.textfield1}>Cash</Text>
           </View>
-          <TouchableOpacity
-            onPress={handleSelectDestinationPress}
-            style={[styling.field1, styles.destinationInput]}>
-            <Image source={Images.greendot} />
-            <TextInput
-              style={styling.textfield1}
-              placeholder="Enter Pickup Location"
-              placeholderTextColor={'#6B768A'}
-              value={currentAddress}
-              editable={false}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={handleSelectDestinationPress}
-            style={[styling.field1, styles.destinationInput]}>
-            <Image source={Images.reddot} />
-            <TextInput
-              placeholder="Select Destination"
-              placeholderTextColor={'#6B768A'}
-              style={styling.textfield1}
-              value={destinationAddress}
-              editable={false}
-              onChangeText={text => {
-                setDestination(text);
-                fetchSuggestions(text);
-              }}
-            />
-          </TouchableOpacity>
-
-          {/* {distance && (
-                    <View style={{ alignItems: 'center', marginTop: 10 }}>
-                        <Text style={styling.textsub1}>Distance: {distance} km</Text>
-                    </View>
-                )} */}
-
+          <Image
+            style={{width: deviceWidth(4), height: deviceWidth(4)}}
+            source={require('../../assets/images/Select.png')}></Image>
         </View>
-        <TouchableOpacity onPress={() => { navigation.navigate('ReviewBooking') }} style={{ width: deviceHeight(40), alignSelf: 'center', marginBottom: deviceHeight(1) }} >
-          <Button text={'Review Booking'} />
+        <Linedim></Linedim>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', columnGap: 20}}>
+            <Image
+              style={{width: deviceWidth(4), height: deviceWidth(4)}}
+              source={require('../../assets/images/Card.png')}></Image>
+            <Text style={styling.textfield1}>UPI</Text>
+          </View>
+          <Image
+            style={{width: deviceWidth(4), height: deviceWidth(4)}}
+            source={require('../../assets/images/Ellipse34.png')}></Image>
+        </View>
+        <TouchableOpacity
+          style={{marginHorizontal: 20}}
+          onPress={() => navigation.navigate('review')}>
+          <Button text={'Done'}></Button>
         </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => { navigation.navigate('BookingHistoryOne') }} style={{ width: deviceHeight(40), alignSelf: 'center', marginBottom: deviceHeight(1) }} >
-          <Button text={'Booking History'} />
-        </TouchableOpacity>
-      </ScrollView>
-    </View >
+      </View>
+    </View>
   );
 };
 
@@ -490,4 +439,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Payment;
