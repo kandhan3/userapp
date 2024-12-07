@@ -9,8 +9,7 @@ const Linedim = () => {
       <View
         style={{
           borderTopWidth: 1,
-
-          borderColor: Colors.border,
+          borderColor: '#6B768A4D',
         }}></View>
     </View>
   );

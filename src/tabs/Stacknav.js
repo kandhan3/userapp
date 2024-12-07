@@ -19,6 +19,8 @@ import BookingHistoryThree from '../localrides/BookingHistoryThree';
 import BookingHistoryFour from '../localrides/BookingHistoryFour';
 import BookingHistoryFive from '../localrides/BookingHistoryFive';
 import Completed from '../localrides/Completed';
+import Reviewbooking from '../localrides/Reviewbooking';
+import Cancelride from '../localrides/Cancelride';
 const Stack = createStackNavigator();
 
 const Stacknav = () => {
@@ -27,7 +29,7 @@ const Stacknav = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName='Home'
+      initialRouteName='splash'
     >
       <Stack.Screen name="splash" component={Splash} />
       <Stack.Screen name="intro1" component={Intro1} />
@@ -47,6 +49,8 @@ const Stacknav = () => {
       <Stack.Screen name="BookingHistoryFour" component={BookingHistoryFour} />
       <Stack.Screen name="BookingHistoryFive" component={BookingHistoryFive} />
       <Stack.Screen name="Completed" component={Completed} />
+      <Stack.Screen name="reviewbooking" component={Reviewbooking} />
+      <Stack.Screen name="cancelride" component={Cancelride} />
 
 
 
