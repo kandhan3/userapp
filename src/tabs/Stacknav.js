@@ -12,6 +12,8 @@ import Picktime from '../localrides/Picktime';
 import Review from '../localrides/Review';
 import Coupon from '../localrides/Coupon';
 import Payment from '../localrides/Payment';
+import Reviewbooking from '../localrides/Reviewbooking';
+import Cancelride from '../localrides/Cancelride';
 const Stack = createStackNavigator();
 
 const Stacknav = () => {
@@ -32,6 +34,8 @@ const Stacknav = () => {
       <Stack.Screen name="review" component={Review} />
       <Stack.Screen name="coupon" component={Coupon} />
       <Stack.Screen name="payment" component={Payment} />
+      <Stack.Screen name="reviewbooking" component={Reviewbooking} />
+      <Stack.Screen name="cancelride" component={Cancelride} />
     </Stack.Navigator>
   );
 };

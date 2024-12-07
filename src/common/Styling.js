@@ -33,6 +33,11 @@ export const styling = {
     fontSize: deviceHeight(2.1),
     fontFamily: Fonts.ibmmedium,
   },
+  textfield2: {
+    color: colors.text,
+    fontSize: deviceHeight(2.1),
+    fontFamily: Fonts.ibmmedium,
+  },
   field1: {
     backgroundColor: colors.field,
     borderRadius: 20,

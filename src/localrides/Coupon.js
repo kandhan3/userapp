@@ -47,6 +47,7 @@ const Coupon = ({navigation, route}) => {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-between',
+              paddingHorizontal: 10,
             },
           ]}>
           <TextInput
@@ -54,7 +55,7 @@ const Coupon = ({navigation, route}) => {
             placeholder="Enter Coupon Code"
             placeholderTextColor={'#6B768A'}
           />
-          <Text style={[styling.textfield1, {flex: 1}]}>Apply</Text>
+          <Text style={[styling.textfield1]}>Apply</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <ImageBackground
