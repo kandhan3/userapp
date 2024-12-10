@@ -12,15 +12,18 @@ import Picktime from '../localrides/Picktime';
 import Review from '../localrides/Review';
 import Coupon from '../localrides/Coupon';
 import Payment from '../localrides/Payment';
-import ReviewBooking from '../localrides/ReviewBooking';
-import BookingHistoryOne from '../localrides/BookingHistoryOne';
 import BookingHistoryTwo from '../localrides/BookingHistoryTwo';
 import BookingHistoryThree from '../localrides/BookingHistoryThree';
-import BookingHistoryFour from '../localrides/BookingHistoryFour';
-import BookingHistoryFive from '../localrides/BookingHistoryFive';
 import Completed from '../localrides/Completed';
 import Reviewbooking from '../localrides/Reviewbooking';
 import Cancelride from '../localrides/Cancelride';
+import Reviewbooking1 from '../localrides/Reviewbooking1';
+import Cancelstill from '../localrides/Cancelstill';
+import Cancelled from '../localrides/Cancelled';
+import Complete from '../localrides/Complete';
+import Rating from '../localrides/Rating';
+import Cancelled1 from '../localrides/Cancelled1';
+import Editprofile from '../editprofile/Editprofile';
 const Stack = createStackNavigator();
 
 const Stacknav = () => {
@@ -42,22 +45,18 @@ const Stacknav = () => {
       <Stack.Screen name="review" component={Review} />
       <Stack.Screen name="coupon" component={Coupon} />
       <Stack.Screen name="payment" component={Payment} />
-      <Stack.Screen name="ReviewBooking" component={ReviewBooking} />
-      <Stack.Screen name="BookingHistoryOne" component={BookingHistoryOne} />
       <Stack.Screen name="BookingHistoryTwo" component={BookingHistoryTwo} />
       <Stack.Screen name="BookingHistoryThree" component={BookingHistoryThree} />
-      <Stack.Screen name="BookingHistoryFour" component={BookingHistoryFour} />
-      <Stack.Screen name="BookingHistoryFive" component={BookingHistoryFive} />
       <Stack.Screen name="Completed" component={Completed} />
       <Stack.Screen name="reviewbooking" component={Reviewbooking} />
       <Stack.Screen name="cancelride" component={Cancelride} />
-
-
-
-
-
-
-
+      <Stack.Screen name="reviewbooking1" component={Reviewbooking1} />
+      <Stack.Screen name="cancelstill" component={Cancelstill} />
+      <Stack.Screen name="cancelled" component={Cancelled} />
+      <Stack.Screen name="complete" component={Complete} />
+      <Stack.Screen name="rating" component={Rating} />
+      <Stack.Screen name="cancelled1" component={Cancelled1} />
+      <Stack.Screen name="editprofile" component={Editprofile} />
     </Stack.Navigator>
   );
 };

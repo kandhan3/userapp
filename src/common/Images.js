@@ -16,6 +16,6 @@ export const Images = {
   payment: require('../../assets/images/Payment.png'),
   lineGap: require('../../assets/images/LineGap.png'),
   star: require('../../assets/images/Star.png'),
-
+  star1: require('../../assets/images/Star1.png'),
 
 }

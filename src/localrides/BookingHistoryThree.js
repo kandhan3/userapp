@@ -14,8 +14,10 @@ const BookingHistoryThree = () => {
     const navigation = useNavigation()
 
     return (
-        <View style={styling.container}>
-            {/* Tab Header */}
+        <View style={[styling.container, { padding: 20 }]}>
+            <TouchableOpacity style={{ marginBottom: 10 }} onPress={(() => navigation.navigate('BookingHistoryTwo'))}>
+                <Image source={Images.back}></Image>
+            </TouchableOpacity>
             <Text style={styling.texthead}>Booking History</Text>
             <View style={styles.tabContainer}>
                 <TouchableOpacity
@@ -42,7 +44,7 @@ const BookingHistoryThree = () => {
             {/* Content Based on Active Tab */}
             <View style={styles.contentContainer}>
                 {activeTab === 'Upcoming' ? (
-                    <View><View style={styles.upcomingContent}>
+                    <View><TouchableOpacity onPress={() => navigation.navigate('reviewbooking1')} style={styles.upcomingContent}>
                         <Image
                             resizeMode="contain"
                             source={Images.minicar}
@@ -59,7 +61,7 @@ const BookingHistoryThree = () => {
                             </View>
                         </View>
 
-                    </View><View style={styles.upcomingContent}>
+                    </TouchableOpacity><View style={styles.upcomingContent}>
                             <Image
                                 resizeMode="contain"
                                 source={Images.minicar}
@@ -93,18 +95,8 @@ const BookingHistoryThree = () => {
                                     <Text style={styles.fareInfo}>Upcoming</Text>
                                 </View>
                             </View>
-
-
                         </View>
-                        <TouchableOpacity style={{ width: deviceHeight(40), alignSelf: 'center', marginBottom: deviceHeight(5) }} onPress={() => { navigation.navigate('BookingHistoryFour') }}>
-                            <Button text={'Book a Ride'} />
-                        </TouchableOpacity>
-
-
                     </View>
-
-
-
                 ) : (
                     <><View style={styles.upcomingContent}>
                         <Image
@@ -158,17 +150,13 @@ const BookingHistoryThree = () => {
                             </View>
 
                         </View>
-                        <TouchableOpacity style={{ width: deviceHeight(40), alignSelf: 'center', marginBottom: deviceHeight(5) }} onPress={() => { navigation.navigate('Completed') }}>
-                            <Button text={'Book a Ride'} />
-                        </TouchableOpacity>
                     </>
                 )}
             </View>
-
-
+            <TouchableOpacity style={{ width: deviceHeight(40), alignSelf: 'center', marginBottom: deviceHeight(5), position: 'absolute', bottom: 20 }} onPress={() => { navigation.navigate('home') }}>
+                <Button text={'Book a Ride'} />
+            </TouchableOpacity>
         </View>
-
-
     );
 };
 
@@ -213,12 +201,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        // padding: deviceWidth(10),
+        padding: deviceWidth(2),
         backgroundColor: '#F8F9FB'
     },
     imageStyle: {
-        width: deviceWidth(25),
-        height: deviceWidth(25),
+        width: deviceWidth(20),
+        height: deviceWidth(20),
     },
     carDetails: {
         flexDirection: 'row',
@@ -227,12 +215,12 @@ const styles = StyleSheet.create({
     },
     carTitle: {
         color: colors.black,
-        fontSize: 16,
+        fontSize: deviceHeight(2),
         fontFamily: Fonts.ibmbold,
     },
     carInfo: {
         color: colors.black,
-        fontSize: 16,
+        fontSize: deviceHeight(2),
         fontFamily: Fonts.ibmbold,
     },
     fareDetails: {
@@ -243,18 +231,18 @@ const styles = StyleSheet.create({
     },
     fareTitle: {
         color: colors.black,
-        fontSize: 14,
+        fontSize: deviceHeight(1.7),
         fontFamily: Fonts.ibmmedium,
     },
     fareInfo: {
         color: '#0883FE',
-        fontSize: 14,
+        fontSize: deviceHeight(1.8),
         fontFamily: Fonts.ibmmedium,
         paddingHorizontal: deviceWidth(2)
     },
     fareInfo2: {
         color: 'red',
-        fontSize: 14,
+        fontSize: deviceHeight(1.8),
         fontFamily: Fonts.ibmmedium,
         paddingHorizontal: deviceWidth(2)
     },

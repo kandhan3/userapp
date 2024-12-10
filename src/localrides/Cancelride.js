@@ -7,19 +7,19 @@ import {
   TouchableOpacity,
   Modal,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {styling} from '../common/Styling';
-import {deviceHeight, deviceWidth} from '../common/Dimens';
-import {colors} from '../common/Colors';
-import {Images} from '../common/Images';
-import MapView, {Marker, PROVIDER_GOOGLE, Polyline} from 'react-native-maps';
+import React, { useEffect, useState } from 'react';
+import { styling } from '../common/Styling';
+import { deviceHeight, deviceWidth } from '../common/Dimens';
+import { colors } from '../common/Colors';
+import { Images } from '../common/Images';
+import MapView, { Marker, PROVIDER_GOOGLE, Polyline } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import Line from '../common/Line';
 import Buttondim from '../common/Buttondim';
 import Linedim from '../common/Linedim';
 
-const Cancelride = ({navigation, route}) => {
+const Cancelride = ({ navigation, route }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [currentAddress, setCurrentAddress] = useState('');
   const [destinationLocation, setDestinationLocation] = useState(null);
@@ -46,7 +46,7 @@ const Cancelride = ({navigation, route}) => {
       try {
         Geolocation.getCurrentPosition(
           async info => {
-            const {latitude, longitude} = info.coords;
+            const { latitude, longitude } = info.coords;
             const coords = {
               latitude,
               longitude,
@@ -66,7 +66,7 @@ const Cancelride = ({navigation, route}) => {
             console.log('Error fetching location:', error);
             getLocation();
           },
-          {enableHighAccuracy: false, timeout: 30000, maximumAge: 5000},
+          { enableHighAccuracy: false, timeout: 30000, maximumAge: 5000 },
         );
         if (destlocatoin) {
           setDestinationLocation({
@@ -91,8 +91,8 @@ const Cancelride = ({navigation, route}) => {
 
     const watchID = Geolocation.watchPosition(
       info => {
-        const {latitude, longitude} = info.coords;
-        const updatedCoords = {latitude, longitude};
+        const { latitude, longitude } = info.coords;
+        const updatedCoords = { latitude, longitude };
         setArrowLocation(updatedCoords);
         if (destinationLocation) {
           const updatedDistance = calculateDistance(
@@ -105,7 +105,7 @@ const Cancelride = ({navigation, route}) => {
         }
       },
       error => console.log('Error watching position:', error),
-      {enableHighAccuracy: true, distanceFilter: 1},
+      { enableHighAccuracy: true, distanceFilter: 1 },
     );
 
     return () => Geolocation.clearWatch(watchID);
@@ -147,8 +147,8 @@ const Cancelride = ({navigation, route}) => {
   };
 
   const handleMapPress = async e => {
-    const {latitude, longitude} = e.nativeEvent.coordinate;
-    const location = {latitude, longitude};
+    const { latitude, longitude } = e.nativeEvent.coordinate;
+    const location = { latitude, longitude };
     setCurrentLocation(location);
     const address = await getAddressFromCoordinates(latitude, longitude);
     setCurrentAddress(address);
@@ -176,7 +176,7 @@ const Cancelride = ({navigation, route}) => {
     //     },
     //     1000
     // );
-    navigation.navigate('searchlocation', {location: currentLocation});
+    navigation.navigate('searchlocation', { location: currentLocation });
   };
 
   useEffect(() => {
@@ -215,10 +215,10 @@ const Cancelride = ({navigation, route}) => {
     const y = Math.sin(dLon) * Math.cos(toRad(destinationLocation.latitude));
     const x =
       Math.cos(toRad(currentLocation.latitude)) *
-        Math.sin(toRad(destinationLocation.latitude)) -
+      Math.sin(toRad(destinationLocation.latitude)) -
       Math.sin(toRad(currentLocation.latitude)) *
-        Math.cos(toRad(destinationLocation.latitude)) *
-        Math.cos(dLon);
+      Math.cos(toRad(destinationLocation.latitude)) *
+      Math.cos(dLon);
     const bearing = toDeg(Math.atan2(y, x));
     return (bearing + 360) % 360;
   };
@@ -299,15 +299,15 @@ const Cancelride = ({navigation, route}) => {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
   };
 
   const onMarkerDragEnd = async e => {
-    const {latitude, longitude} = e.nativeEvent.coordinate;
+    const { latitude, longitude } = e.nativeEvent.coordinate;
     const updatedCoords = {
       latitude,
       longitude,
@@ -325,7 +325,7 @@ const Cancelride = ({navigation, route}) => {
       <MapView
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
-        style={{width: deviceWidth(100), height: deviceHeight(35)}}
+        style={{ width: deviceWidth(100), height: deviceHeight(35) }}
         region={region}
         showsUserLocation={true}
         followUserLocation={true}
@@ -391,30 +391,30 @@ const Cancelride = ({navigation, route}) => {
                   <Image source={require('../../assets/images/Pointer.png')} />
               </TouchableOpacity> */}
       <View
-        style={{flex: 1, justifyContent: 'flex-end', padding: 20, rowGap: 10}}>
-        <Text style={[styling.textfield1, {textAlign: 'center'}]}>
+        style={{ flex: 1, justifyContent: 'flex-end', padding: 20, rowGap: 10 }}>
+        <Text style={[styling.textfield1, { textAlign: 'center' }]}>
           Finding Nearby Drivers...
         </Text>
         <Line></Line>
         <View
-          style={{flexDirection: 'row', alignItems: 'center', columnGap: 10}}>
+          style={{ flexDirection: 'row', alignItems: 'center', columnGap: 10 }}>
           <Text style={styling.textfield1}>Arun kumar R</Text>
           <Image
-            style={{width: deviceWidth(4), height: deviceWidth(4)}}
+            style={{ width: deviceWidth(4), height: deviceWidth(4) }}
             source={require('../../assets/images/Star.png')}></Image>
           <Text style={styling.textsub1}>4.6</Text>
         </View>
         <View
-          style={{flexDirection: 'row', alignItems: 'center', columnGap: 10}}>
+          style={{ flexDirection: 'row', alignItems: 'center', columnGap: 10 }}>
           <Image
-            style={{width: deviceWidth(14), height: deviceWidth(14)}}
+            style={{ width: deviceWidth(14), height: deviceWidth(14) }}
             source={require('../../assets/images/Profile.png')}></Image>
           <View>
             <Text style={styling.texthead}>TN58AQ6492</Text>
             <Text style={styling.textsub}>TATA Tiago EV</Text>
           </View>
         </View>
-        <TouchableOpacity
+        <TouchableOpacity onPress={() => navigation.navigate('complete')}
           style={{
             alignItems: 'center',
             justifyContent: 'center',
@@ -426,7 +426,7 @@ const Cancelride = ({navigation, route}) => {
             height: deviceHeight(7),
           }}>
           <Image
-            style={{width: deviceWidth(6), height: deviceWidth(6)}}
+            style={{ width: deviceWidth(6), height: deviceWidth(6) }}
             source={require('../../assets/images/Call.png')}></Image>
           <Text style={styling.textfield1}>Call Driver</Text>
         </TouchableOpacity>
@@ -478,8 +478,8 @@ const Cancelride = ({navigation, route}) => {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          style={{marginHorizontal: 20}}
-          onPress={() => navigation.navigate('cancelride')}>
+          style={{ marginHorizontal: 20 }}
+          onPress={() => navigation.navigate('cancelstill')}>
           <Buttondim text={'Cancel Ride'}></Buttondim>
         </TouchableOpacity>
         {/* {distance && (

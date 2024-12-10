@@ -446,20 +446,17 @@ const Home = ({ route }) => {
               }}
             />
           </TouchableOpacity>
-
           {/* {distance && (
                     <View style={{ alignItems: 'center', marginTop: 10 }}>
                         <Text style={styling.textsub1}>Distance: {distance} km</Text>
                     </View>
                 )} */}
-
         </View>
-        <TouchableOpacity onPress={() => { navigation.navigate('ReviewBooking') }} style={{ width: deviceHeight(40), alignSelf: 'center', marginBottom: deviceHeight(1) }} >
-          <Button text={'Review Booking'} />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => { navigation.navigate('BookingHistoryOne') }} style={{ width: deviceHeight(40), alignSelf: 'center', marginBottom: deviceHeight(1) }} >
-          <Button text={'Booking History'} />
+        <TouchableOpacity onPress={() => navigation.navigate('BookingHistoryTwo')} style={{ position: 'absolute', top: 10, left: 10 }}>
+          <Image
+            style={{ width: deviceHeight(5), height: deviceHeight(5) }}
+            source={require('../../assets/images/Menu.png')}
+          />
         </TouchableOpacity>
       </ScrollView>
     </View >

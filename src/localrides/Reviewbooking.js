@@ -5,25 +5,26 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
-  Alert,
+  Modal,
   ToastAndroid,
   ImageBackground,
 } from 'react-native';
-import React, {useState, useRef} from 'react';
-import {styling} from '../common/Styling';
-import {Images} from '../common/Images';
-import {deviceHeight, deviceWidth} from '../common/Dimens';
+import React, { useState, useRef } from 'react';
+import { styling } from '../common/Styling';
+import { Images } from '../common/Images';
+import { deviceHeight, deviceWidth } from '../common/Dimens';
 import Button from '../common/Button';
-import {Fonts} from '../common/Fonts';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Fonts } from '../common/Fonts';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
-import {colors} from '../common/Colors';
+import { colors } from '../common/Colors';
 import Linedim from '../common/Linedim';
 import Line from '../common/Line';
 
-const Reviewbooking = ({navigation, route}) => {
+const Reviewbooking = ({ navigation, route }) => {
+  const [modalVisible, setModalVisible] = useState(false);
   return (
-    <View style={[styling.container, {padding: 20}]}>
+    <View style={[styling.container, { padding: 20 }]}>
       <View
         style={{
           flexDirection: 'row',
@@ -67,7 +68,7 @@ const Reviewbooking = ({navigation, route}) => {
             justifyContent: 'space-between',
           }}>
           <View
-            style={{flexDirection: 'row', alignItems: 'center', columnGap: 10}}>
+            style={{ flexDirection: 'row', alignItems: 'center', columnGap: 10 }}>
             <Image
               style={styles.image}
               source={require('../../assets/images/Car.png')}
@@ -77,13 +78,16 @@ const Reviewbooking = ({navigation, route}) => {
               <Text style={styling.textsub1}>Local trip</Text>
             </View>
           </View>
-          <Image
-            style={{
-              width: deviceWidth(6),
-              height: deviceHeight(3),
-            }}
-            source={require('../../assets/images/Info.png')}
-          />
+          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+            <Image
+              style={{
+                width: deviceWidth(6),
+                height: deviceHeight(3),
+              }}
+              source={require('../../assets/images/Info.png')}
+            />
+          </TouchableOpacity>
+
         </View>
         <View
           style={{
@@ -150,17 +154,17 @@ const Reviewbooking = ({navigation, route}) => {
             justifyContent: 'space-between',
           }}>
           <View
-            style={{flexDirection: 'row', alignItems: 'center', columnGap: 20}}>
+            style={{ flexDirection: 'row', alignItems: 'center', columnGap: 20 }}>
             <Text style={styling.textfield1}>26 Oct 2024, 08.15 PM</Text>
           </View>
           <View
-            style={{flexDirection: 'row', alignItems: 'center', columnGap: 10}}>
+            style={{ flexDirection: 'row', alignItems: 'center', columnGap: 10 }}>
             <Image
-              style={{width: deviceWidth(3), height: deviceWidth(4)}}
+              style={{ width: deviceWidth(3), height: deviceWidth(4) }}
               source={require('../../assets/images/Coupon.png')}></Image>
             <Text style={styling.textfield1}>Promo code</Text>
             <Image
-              style={{width: deviceWidth(3), height: deviceWidth(4)}}
+              style={{ width: deviceWidth(3), height: deviceWidth(4) }}
               source={Images.arrow}></Image>
           </View>
         </TouchableOpacity>
@@ -173,7 +177,7 @@ const Reviewbooking = ({navigation, route}) => {
             justifyContent: 'space-between',
           }}>
           <Image
-            style={{width: deviceWidth(6), height: deviceWidth(4)}}
+            style={{ width: deviceWidth(6), height: deviceWidth(4) }}
             source={require('../../assets/images/Payment.png')}></Image>
           <View>
             <Text style={styling.textfield1}>Payment</Text>
@@ -183,14 +187,54 @@ const Reviewbooking = ({navigation, route}) => {
           </View>
 
           <Image
-            style={{width: deviceWidth(3), height: deviceWidth(4)}}
+            style={{ width: deviceWidth(3), height: deviceWidth(4) }}
             source={Images.arrow}></Image>
         </TouchableOpacity>
         <TouchableOpacity
-          style={{marginHorizontal: 20}}
+          style={{ marginHorizontal: 20 }}
           onPress={() => navigation.navigate('cancelride')}>
           <Button text={'Confirm Booking'}></Button>
         </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          statusBarTranslucent
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  rowGap: 10,
+                  padding: 10,
+                  width: deviceWidth(100)
+                }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 10 }}>
+                  <Image style={{ width: deviceHeight(16), height: deviceHeight(8) }} source={Images.minicar}></Image>
+                  <View>
+                    <Text style={styling.textfield1}>Prime Sedan</Text>
+                    <Text style={styling.textsub1}>4 seator</Text>
+                  </View>
+                  <View>
+                    <Text style={styling.textfield1}>₹159 - ₹199</Text>
+                    <Text style={styling.textsub1}>Estimated Fare</Text>
+                  </View>
+                </View>
+                <Text style={styling.textsub1}>• Fare includes additional charges for out of the city limit pickup/drop.</Text>
+                <Text style={styling.textsub1}>• Fare includes additional charges for out of the city limit pickup/drop.</Text>\
+                <Text style={styling.textsub1}>• Fare includes additional charges for out of the city limit pickup/drop.</Text>
+                <TouchableOpacity
+                  style={{ marginHorizontal: 20 }}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Button text={'Close'}></Button>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </KeyboardAwareScrollView>
     </View>
   );
@@ -208,5 +252,24 @@ const styles = StyleSheet.create({
   image: {
     width: deviceWidth(25),
     height: deviceHeight(7),
+  },
+  centeredView: {
+    flex: 1,
+  },
+  modalView: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    padding: 35,
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    top: 35,
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });

@@ -4,7 +4,7 @@ import { deviceHeight, deviceWidth } from './Dimens';
 import { Fonts } from './Fonts';
 
 export const styling = {
-  container: { flex: 1, backgroundColor: 'white', height: deviceHeight(100) },
+  container: { flex: 1, backgroundColor: 'white', },
   texthead: {
     color: 'black',
     fontSize: deviceHeight(2.5),
@@ -32,7 +32,7 @@ export const styling = {
   textfield1: {
     color: 'black',
     fontSize: deviceHeight(2.1),
-    fontFamily: Fonts.ibmmedium,
+    fontFamily: Fonts.ibmsemibold,
   },
   textfield2: {
     color: colors.text,
