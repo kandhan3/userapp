@@ -17,5 +17,15 @@ export const Images = {
   lineGap: require('../../assets/images/LineGap.png'),
   star: require('../../assets/images/Star.png'),
   star1: require('../../assets/images/Star1.png'),
+  upi: require('../../assets/images/Upi.png'),
+  moneyUp: require('../../assets/images/Up.png'),
+  moneyDown: require('../../assets/images/Down.png'),
+  headset: require('../../assets/images/headsetIcon.png'),
+  alert: require('../../assets/images/Alert.png'),
+  referBack: require('../../assets/images/referBack.png'),
+  referGift: require('../../assets/images/refergift.png'),
+
+
+
 
 }

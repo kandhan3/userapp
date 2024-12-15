@@ -87,7 +87,7 @@ const Register = ({ navigation }) => {
             style={{
               color: 'black',
               fontFamily: Fonts.ibmmedium,
-              fontSize: deviceHeight(2.2),
+              fontSize: deviceHeight(2),
             }}>
             +91
           </Text>
@@ -100,16 +100,16 @@ const Register = ({ navigation }) => {
             value={Phonenumber}
             onChangeText={text => setPhonenumber(text)}></TextInput>
         </View>
-        <TouchableOpacity onPress={ ()=>navigation.navigate('otp')} disabled={loading}>
+        <TouchableOpacity onPress={() => navigation.navigate('otp')} disabled={loading}>
           <Buttondim text={loading ? 'Loading...' : 'Send OTP'}></Buttondim>
         </TouchableOpacity>
         <View>
           <Text style={[styling.textsub, { textAlign: 'center' }]}>
             By continuing, you agree that you have read
           </Text>
-          <View style={{ flexDirection: 'row',justifyContent:'center'}}>
-            <Text style={[styling.textsub1,{}]}>and accept our</Text>
-            <Text style={{ color: '#0883FE',fontFamily:Fonts.ibmsemibold,fontSize:deviceHeight(2),textDecorationLine:'underline' }}>Terms and Policy</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <Text style={[styling.textsub1, {}]}>and accept our</Text>
+            <Text style={{ color: '#0883FE', fontFamily: Fonts.ibmsemibold, fontSize: deviceHeight(1.6), textDecorationLine: 'underline' }}>Terms and Policy</Text>
           </View>
         </View>
       </KeyboardAwareScrollView>

@@ -24,6 +24,24 @@ import Complete from '../localrides/Complete';
 import Rating from '../localrides/Rating';
 import Cancelled1 from '../localrides/Cancelled1';
 import Editprofile from '../editprofile/Editprofile';
+import PaymentScreenOne from '../localrides/PaymentScreenOne';
+import PaymentHistory from '../localrides/PaymentHistory';
+import CustomerCare from '../localrides/CustomerCare';
+import SosCall from '../localrides/SosCall';
+import InviteFriendsScreen from '../localrides/InviteFriendsScreen';
+import About from '../localrides/About';
+import Terms from '../localrides/Terms';
+import Privacy from '../localrides/Privacy';
+import Editname from '../editprofile/Editname';
+import Editmobile from '../editprofile/Editmobile';
+import Verifyotp from '../editprofile/Verifyotp';
+import Editemail from '../editprofile/Editemail';
+import Favorites from '../editprofile/Favorites';
+import Editlocation from '../editprofile/Editlocation';
+import Addfavorites from '../editprofile/Addfavorites';
+import Emergency from '../editprofile/Emergency';
+import Delete from '../editprofile/Delete';
+
 const Stack = createStackNavigator();
 
 const Stacknav = () => {
@@ -57,6 +75,23 @@ const Stacknav = () => {
       <Stack.Screen name="rating" component={Rating} />
       <Stack.Screen name="cancelled1" component={Cancelled1} />
       <Stack.Screen name="editprofile" component={Editprofile} />
+      <Stack.Screen name="PaymentScreenOne" component={PaymentScreenOne} />
+      <Stack.Screen name="PaymentHistory" component={PaymentHistory} />
+      <Stack.Screen name="CustomerCare" component={CustomerCare} />
+      <Stack.Screen name="SosCall" component={SosCall} />
+      <Stack.Screen name="InviteFriendsScreen" component={InviteFriendsScreen} />
+      <Stack.Screen name="About" component={About} />
+      <Stack.Screen name="terms" component={Terms} />
+      <Stack.Screen name="Privacy" component={Privacy} />
+      <Stack.Screen name="editname" component={Editname} />
+      <Stack.Screen name="editmobile" component={Editmobile} />
+      <Stack.Screen name="verifyotp" component={Verifyotp} />
+      <Stack.Screen name="editemail" component={Editemail} />
+      <Stack.Screen name="favorites" component={Favorites} />
+      <Stack.Screen name="editlocation" component={Editlocation} />
+      <Stack.Screen name="addfavorites" component={Addfavorites} />
+      <Stack.Screen name="emergency" component={Emergency} />
+      <Stack.Screen name="delete" component={Delete} />
     </Stack.Navigator>
   );
 };

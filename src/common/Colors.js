@@ -4,7 +4,6 @@ export const colors = {
     border: '#6B768A4D',
     field: '#F7F9FB',
     text: '#6B768A',
-    field: '#F7F9FB',
-    text: '#6B768A',
-    black: '#070F2F'
+    black: '#070F2F',
+    lightgray: '#F8F9FB'
 }

@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     tabText: {
-        fontSize: 16,
+        fontSize: deviceHeight(1.8),
         color: '#000',
         fontFamily: Fonts.ibmmedium
     },
@@ -192,10 +192,6 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
 
-    },
-    contentText: {
-        fontSize: 18,
-        fontWeight: '500',
     },
     upcomingContent: {
         flexDirection: 'row',
@@ -215,12 +211,12 @@ const styles = StyleSheet.create({
     },
     carTitle: {
         color: colors.black,
-        fontSize: deviceHeight(2),
+        fontSize: deviceHeight(1.7),
         fontFamily: Fonts.ibmbold,
     },
     carInfo: {
         color: colors.black,
-        fontSize: deviceHeight(2),
+        fontSize: deviceHeight(1.7),
         fontFamily: Fonts.ibmbold,
     },
     fareDetails: {
@@ -231,18 +227,18 @@ const styles = StyleSheet.create({
     },
     fareTitle: {
         color: colors.black,
-        fontSize: deviceHeight(1.7),
+        fontSize: deviceHeight(1.5),
         fontFamily: Fonts.ibmmedium,
     },
     fareInfo: {
         color: '#0883FE',
-        fontSize: deviceHeight(1.8),
+        fontSize: deviceHeight(1.5),
         fontFamily: Fonts.ibmmedium,
         paddingHorizontal: deviceWidth(2)
     },
     fareInfo2: {
         color: 'red',
-        fontSize: deviceHeight(1.8),
+        fontSize: deviceHeight(1.5),
         fontFamily: Fonts.ibmmedium,
         paddingHorizontal: deviceWidth(2)
     },

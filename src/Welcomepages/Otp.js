@@ -8,16 +8,16 @@ import {
   Alert,
   ToastAndroid,
 } from 'react-native';
-import React, {useState, useRef} from 'react';
-import {styling} from '../common/Styling';
-import {Images} from '../common/Images';
-import {deviceHeight, deviceWidth} from '../common/Dimens';
+import React, { useState, useRef } from 'react';
+import { styling } from '../common/Styling';
+import { Images } from '../common/Images';
+import { deviceHeight, deviceWidth } from '../common/Dimens';
 import Button from '../common/Button';
-import {Fonts} from '../common/Fonts';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { Fonts } from '../common/Fonts';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import axios from 'axios';
 
-const Otp = ({navigation, route}) => {
+const Otp = ({ navigation, route }) => {
   const Phonenumber = '';
   const [otp, setOtp] = useState(['', '', '', '']);
   const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ const Otp = ({navigation, route}) => {
     } catch (error) {
       ToastAndroid.show(
         response.data.message ||
-          'Something went wrong. Please try again later.',
+        'Something went wrong. Please try again later.',
         ToastAndroid.SHORT,
       );
     } finally {
@@ -89,18 +89,18 @@ const Otp = ({navigation, route}) => {
   };
 
   return (
-    <View style={[styling.container, {padding: 20}]}>
+    <View style={[styling.container, { padding: 20 }]}>
       <TouchableOpacity onPress={() => navigation.navigate('register')}>
         <Image source={Images.back}></Image>
       </TouchableOpacity>
       <KeyboardAwareScrollView
-        contentContainerStyle={{top: deviceHeight(5), rowGap: 20}}>
+        contentContainerStyle={{ top: deviceHeight(5), rowGap: 20 }}>
         <Text style={styling.texthead}>Verify OTP</Text>
         <View>
           <Text style={styling.textsub}>
             Enter the 4-digit code sent to your Mobile
           </Text>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <Text style={styling.textsub}>Number </Text>
             <Text
               style={{
@@ -139,26 +139,26 @@ const Otp = ({navigation, route}) => {
               keyboardType="numeric"
               value={digit}
               onChangeText={value => handleOtpChange(index, value)}
-              onKeyPress={({nativeEvent: {key}}) => handleKeyPress(index, key)}
+              onKeyPress={({ nativeEvent: { key } }) => handleKeyPress(index, key)}
             />
           ))}
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
           <Text
             style={{
               color: '#6B768A',
-              fontSize: deviceHeight(2),
+              fontSize: deviceHeight(1.8),
               fontFamily: Fonts.ibmbold,
               lineHeight: 20,
             }}>
             I don’t receive code{' '}
           </Text>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => { }}>
             <Text
               style={{
                 color: '#0883FE',
                 fontFamily: Fonts.ibmsemibold,
-                fontSize: deviceHeight(2),
+                fontSize: deviceHeight(1.8),
                 textDecorationLine: 'underline',
                 lineHeight: 20,
               }}>
