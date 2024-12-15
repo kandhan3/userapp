@@ -1,178 +1,246 @@
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Modal } from 'react-native'
-import React, { useState } from 'react'
-import { styling } from '../common/Styling'
-import { colors } from '../common/Colors'
-import { Fonts } from '../common/Fonts'
-import { Images } from '../common/Images'
-import { deviceHeight, deviceWidth } from '../common/Dimens'
-import Button from '../common/Button'
-import { ScrollView } from 'react-native-gesture-handler'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Modal,
+  ToastAndroid,
+  ImageBackground,
+} from 'react-native';
+import React, { useState, useRef } from 'react';
+import { styling } from '../common/Styling';
+import { Images } from '../common/Images';
+import { deviceHeight, deviceWidth } from '../common/Dimens';
+import Button from '../common/Button';
+import { Fonts } from '../common/Fonts';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import axios from 'axios';
+import { colors } from '../common/Colors';
+import Linedim from '../common/Linedim';
+import Line from '../common/Line';
 
-const ReviewBooking = () => {
+const Reviewbooking = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
-
   return (
-    <ScrollView>
-      <View style={styling.container}>
-        <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium, textAlign: 'center' }}>ReviewBooking</Text>
-        <View style={{ padding: 20, rowGap: 10 }}>
-          <TouchableOpacity style={[styling.field1, styles.destinationInput]}>
-            <Image source={Images.greendot} />
-            <TextInput
-              style={styling.textfield1}
-              placeholder="Enter Pickup Location"
-              placeholderTextColor={'#6B768A'}
-              editable={false}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styling.field1, styles.destinationInput]}>
-            <Image source={Images.reddot} />
-            <TextInput
-              placeholder="Select Destination"
-              placeholderTextColor={'#6B768A'}
-              style={styling.textfield1}
-              editable={false}
-            />
-          </TouchableOpacity>
-        </View>
-        <View>
-          <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium, textAlign: 'left', padding: 10 }}>Trip Details</Text>
-
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-
-            <Image resizeMode='contain' source={Images.minicar} style={{ width: deviceWidth(25), height: deviceWidth(25) }} />
-
-            <View style={{ flexDirection: 'column', paddingHorizontal: deviceWidth(16) }}>
-              <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium }}>Mini (4 Seater)</Text>
-              <Text style={{ color: colors.black, fontSize: 16 }}>Local Trip</Text>
-            </View>
-
-            <Image resizeMode='contain' source={Images.info} style={{ width: deviceWidth(5) }} />
-
-          </View>
-
-          <View>
-            <View style={{ borderWidth: 1, borderColor: '#E7EAF0', width: deviceWidth(90), alignSelf: 'center' }}>
-              <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
-                <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium }}>Estimate Fare</Text>
-                <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium, paddingLeft: deviceWidth(50) }}>₹159</Text>
-              </View>
-              <Text style={{ color: colors.text, fontSize: 17, paddingTop: 10 }}>Including taxes</Text>
-            </View>
-
-            <View style={{ borderWidth: 1, borderColor: '#E7EAF0', width: deviceWidth(90), alignSelf: 'center' }}>
-              <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: deviceHeight(3) }}>
-                <Text style={{ color: colors.text, fontSize: 17 }}>Base fare</Text>
-                <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium, paddingLeft: deviceWidth(55) }}>₹55.25</Text>
-              </View>
-
-              <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: deviceHeight(3) }}>
-                <Text style={{ color: colors.text, fontSize: 17 }}>Rate per km</Text>
-                <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium, paddingLeft: deviceWidth(50) }}>₹55.25</Text>
-              </View>
-
-              <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: deviceHeight(3) }}>
-                <Text style={{ color: colors.text, fontSize: 17 }}>Ride time charge per min</Text>
-                <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium, paddingLeft: deviceWidth(26) }}>₹11.05</Text>
-              </View>
-
-              <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: deviceHeight(3) }}>
-                <Text style={{ color: colors.text, fontSize: 17 }}>Waiting fee per min</Text>
-                <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium, paddingLeft: deviceWidth(40) }}>₹1.27</Text>
-              </View>
-            </View>
-
-
-          </View>
-
-          <View style={{ flexDirection: 'row', alignItems: 'center', columnGap: 30, justifyContent: 'center', marginTop: 10 }}>
-            <View>
-              <Text style={{ color: colors.black, fontSize: 15, fontFamily: Fonts.ibmmedium }}>26,Oct,2024, 07.30 PM</Text>
-            </View>
-
-            <View style={{ flexDirection: 'row', alignItems: 'center', columnGap: 10 }}>
-              <Image resizeMode='contain' source={Images.coupon} style={{ width: deviceWidth(5) }} />
-              <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium }}>Promo Code</Text>
-            </View>
-
-            <Image resizeMode='contain' source={Images.arrow} style={{ width: deviceWidth(5) }} />
-
-          </View>
-
-
-          <View style={{ flexDirection: 'row', alignItems: 'center', columnGap: 30, justifyContent: 'center', marginTop: 10 }}>
-            <Image resizeMode='contain' source={Images.payment} style={{ width: deviceWidth(10), height: deviceWidth(10) }} />
-
-
-            <View style={{ flexDirection: 'column' }}>
-              <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium }}>Payment</Text>
-              <Text style={{ color: colors.text, fontSize: 13, fontFamily: Fonts.ibmmedium }}>You can pay via cash or UPI for your ride</Text>
-            </View>
-
-            <Image resizeMode='contain' source={Images.arrow} style={{ width: deviceWidth(5) }} />
-
-          </View>
-
-          <TouchableOpacity onPress={() => setModalVisible(true)} style={{ marginTop: deviceHeight(3), width: deviceHeight(40), alignSelf: 'center' }}>
-            <Button
-              text={'Confirm Booking'}
-            />
-
-          </TouchableOpacity>
-        </View>
+    <View style={[styling.container, { padding: 20 }]}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <TouchableOpacity onPress={() => navigation.navigate('review')}>
+          <Image source={Images.back}></Image>
+        </TouchableOpacity>
+        <Text style={styling.texthead}>Review Booking</Text>
+        <View></View>
       </View>
 
-      <Modal
-        visible={modalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-
-              <Image resizeMode='contain' source={Images.minicar} style={{ width: deviceWidth(25), height: deviceWidth(25) }} />
-
-              <View style={{ flexDirection: 'column', paddingHorizontal: deviceWidth(13) }}>
-                <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium }}>Mini Car</Text>
-                <Text style={{ color: colors.black, fontSize: 16 }}>4 Seater</Text>
-              </View>
-
-              <View style={{ flexDirection: 'column' }}>
-                <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium }}>₹159 - ₹199</Text>
-                <Text style={{ color: colors.black, fontSize: 16 }}>Estimated Fare</Text>
-              </View>
-
+      <KeyboardAwareScrollView
+        contentContainerStyle={{
+          top: deviceHeight(5),
+          rowGap: 12,
+        }}>
+        <TouchableOpacity style={[styling.field1, styles.destinationInput]}>
+          <Image source={Images.greendot} />
+          <TextInput
+            style={styling.textfield1}
+            placeholder="Enter Pickup Location"
+            placeholderTextColor={'#6B768A'}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={[styling.field1, styles.destinationInput]}>
+          <Image source={Images.reddot} />
+          <TextInput
+            placeholder="Select Destination"
+            placeholderTextColor={'#6B768A'}
+            style={styling.textfield1}
+          />
+        </TouchableOpacity>
+        <Text style={styling.textfield1}>Trip Details</Text>
+        <Linedim></Linedim>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', columnGap: 10 }}>
+            <Image
+              style={styles.image}
+              source={require('../../assets/images/Car.png')}
+            />
+            <View>
+              <Text style={styling.textfield1}>Mini(4 Seater)</Text>
+              <Text style={styling.textsub1}>Local trip</Text>
             </View>
+          </View>
+          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+            <Image
+              style={{
+                width: deviceWidth(6),
+                height: deviceHeight(3),
+              }}
+              source={require('../../assets/images/Info.png')}
+            />
+          </TouchableOpacity>
 
-            <View style={{ alignSelf: 'center', margin: 10, rowGap: 20 }}>
-              <Text style={{ color: colors.black, fontSize: 16 }}>Fare includes additional charges for out of the city limit pickup/drop.</Text>
-
-              <Text style={{ color: colors.black, fontSize: 16 }}>Fare shown here is approximate fare and inclusive of GST.</Text>
-
-
-              <Text style={{ color: colors.black, fontSize: 16 }}>Fare may change if Toll, Route or Destination is changed or Other factors</Text>
-
-            </View>
-
-            <View style={{ alignSelf: 'flex-start' }}>
-              <Text style={{ color: colors.black, fontSize: 18, fontFamily: Fonts.ibmmedium }}>Our Fleets</Text>
-              <Text style={{ color: colors.black, fontSize: 16 }}>Tata Indica, Nissan Micra, Maruthi Ritz</Text>
-
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: deviceHeight(3), width: deviceHeight(40), alignSelf: 'center' }}>
-              <Button text={'Close'} />
-            </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            borderWidth: 1,
+            padding: 10,
+            borderColor: colors.border,
+            borderRadius: 10,
+            rowGap: 10,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={styling.textfield1}>Estimate Fare</Text>
+            <Text style={styling.textfield1}>₹159 - ₹199</Text>
+          </View>
+          <Text style={styling.textsub1}>Including taxes</Text>
+          <Line></Line>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={styling.textfield2}>Base Fare</Text>
+            <Text style={styling.textfield1}>₹159</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={styling.textfield2}>Rate per km</Text>
+            <Text style={styling.textfield1}>₹19</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={styling.textfield2}>Ride time charge per min</Text>
+            <Text style={styling.textfield1}>₹9</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={styling.textfield2}>Waiting fee per min</Text>
+            <Text style={styling.textfield1}>₹1</Text>
           </View>
         </View>
-      </Modal>
-    </ScrollView>
-  )
-}
+        <Line></Line>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('coupon')}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', columnGap: 20 }}>
+            <Text style={styling.textfield1}>26 Oct 2024, 08.15 PM</Text>
+          </View>
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', columnGap: 10 }}>
+            <Image
+              style={{ width: deviceWidth(3), height: deviceWidth(4) }}
+              source={require('../../assets/images/Coupon.png')}></Image>
+            <Text style={styling.textfield1}>Promo code</Text>
+            <Image
+              style={{ width: deviceWidth(3), height: deviceWidth(4) }}
+              source={Images.arrow}></Image>
+          </View>
+        </TouchableOpacity>
+        <Linedim></Linedim>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('payment')}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <Image
+            style={{ width: deviceWidth(6), height: deviceWidth(4) }}
+            source={require('../../assets/images/Payment.png')}></Image>
+          <View>
+            <Text style={styling.textfield1}>Payment</Text>
+            <Text style={styling.textsub1}>
+              You can pay via cash or UPI for your ride
+            </Text>
+          </View>
 
-export default ReviewBooking
+          <Image
+            style={{ width: deviceWidth(3), height: deviceWidth(4) }}
+            source={Images.arrow}></Image>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ marginHorizontal: 20 }}
+          onPress={() => navigation.navigate('cancelride')}>
+          <Button text={'Confirm Booking'}></Button>
+        </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          statusBarTranslucent
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  rowGap: 10,
+                  padding: 10,
+                  width: deviceWidth(100)
+                }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 10 }}>
+                  <Image style={{ width: deviceHeight(16), height: deviceHeight(8) }} source={Images.minicar}></Image>
+                  <View>
+                    <Text style={styling.textfield1}>Prime Sedan</Text>
+                    <Text style={styling.textsub1}>4 seator</Text>
+                  </View>
+                  <View>
+                    <Text style={styling.textfield1}>₹159 - ₹199</Text>
+                    <Text style={styling.textsub1}>Estimated Fare</Text>
+                  </View>
+                </View>
+                <Text style={styling.textsub1}>• Fare includes additional charges for out of the city limit pickup/drop.</Text>
+                <Text style={styling.textsub1}>• Fare includes additional charges for out of the city limit pickup/drop.</Text>\
+                <Text style={styling.textsub1}>• Fare includes additional charges for out of the city limit pickup/drop.</Text>
+                <TouchableOpacity
+                  style={{ marginHorizontal: 20 }}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Button text={'Close'}></Button>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      </KeyboardAwareScrollView>
+    </View>
+  );
+};
+
+export default Reviewbooking;
 
 const styles = StyleSheet.create({
   destinationInput: {
@@ -180,27 +248,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     columnGap: 5,
     paddingHorizontal: 20,
-
   },
-  modalContainer: {
+  image: {
+    width: deviceWidth(25),
+    height: deviceHeight(7),
+  },
+  centeredView: {
+    flex: 1,
+  },
+  modalView: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    padding: 35,
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
+    top: 35,
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    height: deviceHeight(50)
   },
-})
+});
